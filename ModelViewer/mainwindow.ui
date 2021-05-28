@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>576</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Skellig</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="centralLayout">
+    <item>
+     <layout class="QHBoxLayout" name="settingsLayout">
+      <item>
+       <widget class="GLWidget" name="widget" native="true"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>OpenFile</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="wireframeBox">
+      <property name="text">
+       <string>Wireframe</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <action name="openAction">
+   <property name="text">
+    <string>Ouvrir un modèle...</string>
+   </property>
+  </action>
+  <action name="aboutAction">
+   <property name="text">
+    <string>À propos</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QWidget</extends>
+   <header>glwidget.h</header>
+   <container>1</container>
+   <slots>
+    <slot>setPolygonMode(int)</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>wireframeBox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>widget</receiver>
+   <slot>setPolygonMode(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>14</x>
+     <y>535</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>79</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

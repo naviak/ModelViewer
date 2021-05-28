@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelViewer", "ModelViewer\ModelViewer.vcxproj", "{0E3F320C-F667-44A7-B64D-21C62EBE4F8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E3F320C-F667-44A7-B64D-21C62EBE4F8E}.Debug|x64.ActiveCfg = Debug|x64
+		{0E3F320C-F667-44A7-B64D-21C62EBE4F8E}.Debug|x64.Build.0 = Debug|x64
+		{0E3F320C-F667-44A7-B64D-21C62EBE4F8E}.Release|x64.ActiveCfg = Release|x64
+		{0E3F320C-F667-44A7-B64D-21C62EBE4F8E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC5C8AC4-6E77-4011-8E1A-C5E44F63BE8D}
+	EndGlobalSection
+EndGlobal
