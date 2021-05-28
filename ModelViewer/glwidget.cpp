@@ -3,7 +3,6 @@
 GLWidget::GLWidget(QWidget* parent) :
     QOpenGLWidget(parent),
     m_model(nullptr),
-    m_camera(20.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
     m_timer(0),
     m_program(0)
 {
@@ -22,7 +21,7 @@ GLWidget::~GLWidget() {
 
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
-
+    setFocusPolicy(Qt::StrongFocus);
     m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, "shader.vert");
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, "shader.frag");
@@ -36,15 +35,11 @@ void GLWidget::initializeGL() {
     glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 }
 
-void GLWidget::resizeGL(int w, int h) {
-    m_projectionMat.setToIdentity();
-    m_projectionMat.perspective(45.0f, w / float(h), 1.0f, 1000.0f);
-}
 
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    QMatrix4x4 viewMat = m_camera.view();
+    QMatrix4x4 viewMat = _camera.getViewMatrix();
 
     m_program->bind();
     m_program->setUniformValue("model", m_modelMat);
@@ -62,45 +57,6 @@ void GLWidget::loadModel(QString filename) {
     doneCurrent();
 }
 
-void GLWidget::wheelEvent(QWheelEvent* event) {
-    float x = m_camera.position().x();
-    x = qBound(0.0f, x - event->angleDelta().y() / 30.0f, 500.0f);
-
-    m_camera.setPositionX(x);
-    event->accept();
-}
-
-void GLWidget::mouseMoveEvent(QMouseEvent* event) {
-    Qt::MouseButtons buttons = event->buttons();
-
-    if (buttons & Qt::LeftButton) {
-        if (m_lastMousePos.isNull()) {
-            m_lastMousePos = event->pos();
-        }
-        else {
-            QPoint offset = event->pos() - m_lastMousePos;
-            m_modelMat.rotate((float)offset.x(), 0.0f, 1.0f, 0.0f);
-            m_lastMousePos = event->pos();
-        }
-    }
-    else if (buttons & Qt::MiddleButton) {
-        if (m_lastMousePos.isNull()) {
-            m_lastMousePos = event->pos();
-        }
-        else {
-            QPoint offset = event->pos() - m_lastMousePos;
-            m_camera.setPositionY(m_camera.position().y() + offset.y() / 2.0f);
-            m_camera.setTargetY(m_camera.target().y() + offset.y() / 2.0f);
-            m_lastMousePos = event->pos();
-        }
-    }
-    event->accept();
-}
-
-void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
-    m_lastMousePos = QPoint();
-    event->accept();
-}
 
 void GLWidget::setPolygonMode(int wireframe) {
     makeCurrent();
