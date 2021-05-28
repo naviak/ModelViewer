@@ -29,7 +29,7 @@ void GLWidget::initializeGL() {
     assert(m_program->link());
     assert(m_program->bind());
     m_timer = new QTimer(this);
-    //connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer->start(1000/60.0f);
 
     glEnable(GL_DEPTH_TEST);
