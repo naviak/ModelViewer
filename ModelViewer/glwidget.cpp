@@ -23,10 +23,11 @@ void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
     setFocusPolicy(Qt::StrongFocus);
     m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, "shader.vert");
-    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, "shader.frag");
+    assert(m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, "shaderv.vert"));
+    assert(m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, "shader.frag"));
     assert(m_program->link());
     assert(m_program->bind());
+    glUseProgram(m_program->programId());
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer->start(1000/60.0f);
@@ -39,15 +40,19 @@ void GLWidget::initializeGL() {
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    QMatrix4x4 viewMat = _camera.getViewMatrix();
-
     m_program->bind();
     m_program->setUniformValue("model", m_modelMat);
-    m_program->setUniformValue("view", viewMat);
+    m_program->setUniformValue("view", _camera.getViewMatrix());
     m_program->setUniformValue("projection", m_projectionMat);
 
-    if (m_model != nullptr)
+    if (m_model != nullptr) {
+        makeCurrent();
         m_model->draw(this);
+        doneCurrent();
+    }
+    moveCamera();
+    Input::reset();
+    MouseInput::reset();
     update();
 }
 

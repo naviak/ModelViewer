@@ -43,11 +43,11 @@ protected:
 		{
 			if (Input::keyPressed(key))
 			{
-				_camera.translate(dir * 0.1f);
+				_camera.translate(dir * 0.02f);
 			}
 		}
 		if (Input::keyPressed(Qt::LeftButton))
-			_camera.look(MouseInput::delta().x() * 0.5f, MouseInput::delta().y() * 0.5f);
+			_camera.look(MouseInput::delta().x() * 0.06f, MouseInput::delta().y() * 0.06f);
 	}
 	void wheelEvent(QWheelEvent* event) override
 	{
