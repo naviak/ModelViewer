@@ -26,7 +26,7 @@ class Model {
 public:
     Model(QString filename, QOpenGLFunctions_3_3_Core* context,QOpenGLShaderProgram* program);
     ~Model();
-    void draw(QOpenGLFunctions_3_3_Core* context);
+    void draw(QOpenGLFunctions_3_3_Core* context, QOpenGLShaderProgram* program);
 
 private:
     void processNode(QOpenGLFunctions_3_3_Core* context, aiNode* source, Node* node, const aiScene* scene, QOpenGLShaderProgram* program);

@@ -15,8 +15,6 @@ GLWidget::~GLWidget() {
     delete m_model;
     delete m_program;
     doneCurrent();
-    if (m_model != 0)
-        m_model->draw(this);
 }
 
 void GLWidget::initializeGL() {
@@ -27,6 +25,7 @@ void GLWidget::initializeGL() {
     assert(m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, "shader.frag"));
     assert(m_program->link());
     assert(m_program->bind());
+    m_program->setUniformValue("vLight", QVector3D(2, 2, 2));
     glUseProgram(m_program->programId());
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -47,7 +46,7 @@ void GLWidget::paintGL() {
 
     if (m_model != nullptr) {
         makeCurrent();
-        m_model->draw(this);
+        m_model->draw(this,m_program);
         doneCurrent();
     }
     moveCamera();

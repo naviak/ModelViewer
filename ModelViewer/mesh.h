@@ -33,7 +33,7 @@ public:
     Mesh();
     ~Mesh();
     void setup(QOpenGLFunctions_3_3_Core* gl, QOpenGLShaderProgram* program);
-    void draw(QOpenGLFunctions_3_3_Core* gl);
+    void draw(QOpenGLFunctions_3_3_Core* gl, QOpenGLShaderProgram* program);
 
     QVector<Vertex> vertices;
     QVector<unsigned int> indices;

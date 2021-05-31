@@ -48,13 +48,18 @@ void Mesh::setup(QOpenGLFunctions_3_3_Core* gl, QOpenGLShaderProgram* program)
     m_vertexArray.release();
 }
 
-void Mesh::draw(QOpenGLFunctions_3_3_Core* gl) {
+void Mesh::draw(QOpenGLFunctions_3_3_Core* gl, QOpenGLShaderProgram* program) {
     // Lighting is not implemented, so we handle at most one texture.
     if (textures.size() > 0) {
+        program->setUniformValue("Texture0", 0);
+        gl->glActiveTexture(GL_TEXTURE0);
         textures[0]->bind();
     }
 
     m_vertexArray.bind();
     gl->glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     m_vertexArray.release();
+    if (textures.size() > 0) {
+        textures[0]->release();
+    }
 }

@@ -66,7 +66,7 @@ void Model::processMesh(aiMesh* source, Mesh* mesh, const aiScene* scene) {
         if (source->mTextureCoords[0]) {
             aiVector3D tex = source->mTextureCoords[0][i];
             vertex.texCoords[0] = tex.x;
-            vertex.texCoords[0] = tex.y;
+            vertex.texCoords[1] = tex.y;
         }
 
         mesh->vertices.append(vertex);
@@ -113,20 +113,23 @@ void Model::loadTextures(Mesh* mesh, aiMaterial* material, aiTextureType type) {
         aiString filename;
 
         material->GetTexture(type, i, &filename);
-        QImage tex(dir.absoluteFilePath(filename.C_Str()));
+        auto dr = dir.absoluteFilePath(filename.C_Str());
+        QImage tex(dr);
 
         if (tex.isNull()) {
             qDebug() << "Texture not found : " << filename.C_Str();
             continue;
         }
 
-        QOpenGLTexture* texture = new QOpenGLTexture(tex, QOpenGLTexture::DontGenerateMipMaps);
+        QOpenGLTexture* texture = new QOpenGLTexture(tex);
+        texture->setWrapMode(QOpenGLTexture::MirroredRepeat);
+        texture->setMinificationFilter(QOpenGLTexture::Nearest);
         mesh->textures.append(texture);
     }
 }
 
-void Model::draw(QOpenGLFunctions_3_3_Core* context) {
+void Model::draw(QOpenGLFunctions_3_3_Core* context, QOpenGLShaderProgram* program) {
     for(int i = 0; i < m_meshes.size(); i++) {
-        m_meshes[i]->draw(context);
+        m_meshes[i]->draw(context, program);
     }
 }
