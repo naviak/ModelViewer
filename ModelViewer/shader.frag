@@ -11,8 +11,8 @@ void main() {
     vec3 L = normalize(fL);
     float diffuse_intensity = max(dot(N,L),0.0f);
 
-    //gl_FragColor = texture(Texture0, TexCoords);
+    gl_FragColor = diffuse_intensity*texture(Texture0, TexCoords);
     //gl_FragColor = vec4(TexCoords,0.1f,1.0f);
-    gl_FragColor = vec4(diffuse_intensity,diffuse_intensity,diffuse_intensity,0.5f);
+    //gl_FragColor = vec4(diffuse_intensity,diffuse_intensity,diffuse_intensity,0.5f);
 }
 

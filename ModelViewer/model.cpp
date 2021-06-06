@@ -104,6 +104,7 @@ void Model::processMesh(aiMesh* source, Mesh* mesh, const aiScene* scene) {
 
     aiMaterial* material = scene->mMaterials[source->mMaterialIndex];
     loadTextures(mesh, material, aiTextureType_DIFFUSE);
+	
 }
 
 void Model::loadTextures(Mesh* mesh, aiMaterial* material, aiTextureType type) {
