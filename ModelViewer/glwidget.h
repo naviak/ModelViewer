@@ -23,7 +23,7 @@ public:
     ~GLWidget() override;
 
     void loadModel(QString filename);
-
+	void loadRoad();
 public slots:
     void setPolygonMode(int wireframe);
 
@@ -102,7 +102,7 @@ private:
     Model* m_model = nullptr;
     QMatrix4x4 m_modelMat;
     QMatrix4x4 m_projectionMat;
-
+	Model* road = nullptr;
     Camera _camera;
     QTimer* m_timer;
     QPoint m_lastMousePos;

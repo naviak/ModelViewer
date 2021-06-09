@@ -26,13 +26,15 @@ void GLWidget::initializeGL() {
     assert(m_program->link());
     assert(m_program->bind());
     m_program->setUniformValue("vLight", QVector3D(2, 2, 2));
+    m_program->setUniformValue("ambientLight", QVector4D(0.3f, 0.3f, 0.3f,1.f));
+    
     glUseProgram(m_program->programId());
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer->start(1000/60.0f);
-
+    loadRoad();
     glEnable(GL_DEPTH_TEST);
-    glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 }
 
 
@@ -43,7 +45,9 @@ void GLWidget::paintGL() {
     m_program->setUniformValue("model", m_modelMat);
     m_program->setUniformValue("view", _camera.getViewMatrix());
     m_program->setUniformValue("projection", m_projectionMat);
-
+    makeCurrent();
+    road->draw(this, m_program);
+    doneCurrent();
     if (m_model != nullptr) {
         makeCurrent();
         m_model->draw(this,m_program);
@@ -59,6 +63,11 @@ void GLWidget::loadModel(QString filename) {
     makeCurrent();
     m_model = new Model(filename, this,m_program);
     doneCurrent();
+}
+
+void GLWidget::loadRoad()
+{
+    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/road.obj", this, m_program);
 }
 
 

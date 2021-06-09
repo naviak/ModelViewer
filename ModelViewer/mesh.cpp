@@ -49,9 +49,10 @@ void Mesh::setup(QOpenGLFunctions_3_3_Core* gl, QOpenGLShaderProgram* program)
 }
 
 void Mesh::draw(QOpenGLFunctions_3_3_Core* gl, QOpenGLShaderProgram* program) {
-    // Lighting is not implemented, so we handle at most one texture.
+    program->setUniformValue("TextureSet", false);
     if (textures.size() > 0) {
         program->setUniformValue("Texture0", 0);
+        program->setUniformValue("TextureSet", true);
         gl->glActiveTexture(GL_TEXTURE0);
         textures[0]->bind();
     }
