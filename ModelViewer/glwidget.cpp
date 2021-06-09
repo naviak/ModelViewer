@@ -67,7 +67,7 @@ void GLWidget::loadModel(QString filename) {
 
 void GLWidget::loadRoad()
 {
-    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/road.obj", this, m_program);
+    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/gr3.obj", this, m_program);
 }
 
 

@@ -17,10 +17,17 @@ out vec3 fN; //light normal
 out vec3 fL; /// light vec
 
 
+out float visibility;
 void main(void)
 {
+    float density = 0.1f;
+    float gradient = 1.5f;
+    vec4 PosRelToCam = model*view*vec4(position,1.0f);
     fN = normal;
     fL = vLight;
     gl_Position = projection * view * model * vec4(position, 1.0f);
     TexCoords = texCoords;
+
+    float distance = length(PosRelToCam.xyz);
+    visibility = exp(-1.f*pow((distance*density),gradient));
 }
