@@ -3,8 +3,7 @@
 GLWidget::GLWidget(QWidget* parent) :
     QOpenGLWidget(parent),
     m_model(nullptr),
-    m_timer(0),
-    m_program(0)
+    m_timer(0)
 {
     setMouseTracking(true);
     setFocusPolicy(Qt::StrongFocus);
@@ -13,22 +12,40 @@ GLWidget::GLWidget(QWidget* parent) :
 GLWidget::~GLWidget() {
     makeCurrent();
     delete m_model;
-    delete m_program;
+	for(auto &a:m_program){ delete a; }
     doneCurrent();
+}
+
+QOpenGLShaderProgram* GLWidget::newShader()
+{
+    auto shader = new QOpenGLShaderProgram(this);
+    assert(shader->addShaderFromSourceFile(QOpenGLShader::Vertex, "shadernew.vert"));
+    assert(shader->addShaderFromSourceFile(QOpenGLShader::Fragment, "shadernew.frag"));
+    assert(shader->link());
+    assert(shader->bind());
+    shader->setUniformValue("vLight", QVector3D(2, 2, 2));
+    shader->setUniformValue("ambientLight", QVector4D(0.8f, 0.3f, 0.3f, 1.f));
+    return shader;
+}
+
+QOpenGLShaderProgram* GLWidget::simpleShader()
+{
+    auto shader = new QOpenGLShaderProgram(this);
+    assert(shader->addShaderFromSourceFile(QOpenGLShader::Vertex, "shaderv.vert"));
+    assert(shader->addShaderFromSourceFile(QOpenGLShader::Fragment, "shader.frag"));
+    assert(shader->link());
+    assert(shader->bind());
+    shader->setUniformValue("vLight", QVector3D(2, 2, 2));
+    shader->setUniformValue("ambientLight", QVector4D(0.3f, 0.3f, 0.3f, 1.f));
+    return shader;
 }
 
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
     setFocusPolicy(Qt::StrongFocus);
-    m_program = new QOpenGLShaderProgram(this);
-    assert(m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, "shaderv.vert"));
-    assert(m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, "shader.frag"));
-    assert(m_program->link());
-    assert(m_program->bind());
-    m_program->setUniformValue("vLight", QVector3D(2, 2, 2));
-    m_program->setUniformValue("ambientLight", QVector4D(0.3f, 0.3f, 0.3f,1.f));
-    
-    glUseProgram(m_program->programId());
+    m_program.push_back(simpleShader());
+    m_program.push_back(newShader());
+    glUseProgram(m_program[shader_num]->programId());
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer->start(1000/60.0f);
@@ -41,16 +58,16 @@ void GLWidget::initializeGL() {
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    m_program->bind();
-    m_program->setUniformValue("model", m_modelMat);
-    m_program->setUniformValue("view", _camera.getViewMatrix());
-    m_program->setUniformValue("projection", m_projectionMat);
+    m_program[shader_num]->bind();
+    m_program[shader_num]->setUniformValue("model", m_modelMat);
+    m_program[shader_num]->setUniformValue("view", _camera.getViewMatrix());
+    m_program[shader_num]->setUniformValue("projection", m_projectionMat);
     makeCurrent();
-    road->draw(this, m_program);
+    road->draw(this, m_program[shader_num]);
     doneCurrent();
     if (m_model != nullptr) {
         makeCurrent();
-        m_model->draw(this,m_program);
+        m_model->draw(this,m_program[shader_num]);
         doneCurrent();
     }
     moveCamera();
@@ -61,13 +78,19 @@ void GLWidget::paintGL() {
 
 void GLWidget::loadModel(QString filename) {
     makeCurrent();
-    m_model = new Model(filename, this,m_program);
+    m_model = new Model(filename, this,m_program[shader_num]);
     doneCurrent();
 }
 
 void GLWidget::loadRoad()
 {
-    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/gr3.obj", this, m_program);
+    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/gr3.obj", this, m_program[shader_num]);
+}
+
+void GLWidget::setNewShader(int newshader)
+{
+    shader_num = newshader/2;
+    glUseProgram(m_program[shader_num]->programId());
 }
 
 

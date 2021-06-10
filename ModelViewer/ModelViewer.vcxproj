@@ -120,6 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />
+    <None Include="shadernew.frag" />
+    <None Include="shadernew.vert" />
     <None Include="shaderv.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

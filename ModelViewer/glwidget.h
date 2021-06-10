@@ -21,11 +21,13 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core {
 public:
     GLWidget(QWidget* parent);
     ~GLWidget() override;
-
+	QOpenGLShaderProgram* newShader();
+	QOpenGLShaderProgram* simpleShader();
     void loadModel(QString filename);
 	void loadRoad();
 public slots:
     void setPolygonMode(int wireframe);
+	void setNewShader(int newshader);
 
 protected:
     void initializeGL() override;
@@ -106,8 +108,9 @@ private:
     Camera _camera;
     QTimer* m_timer;
     QPoint m_lastMousePos;
-
-    QOpenGLShaderProgram* m_program;
+	int shader_num = 0;
+    QVector<QOpenGLShaderProgram*> m_program;
+	QOpenGLShaderProgram* nm_program;
 };
 
 #endif // GLWIDGET_H

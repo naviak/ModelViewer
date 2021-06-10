@@ -76,5 +76,7 @@
     <None Include="shaderv.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shadernew.frag" />
+    <None Include="shadernew.vert" />
   </ItemGroup>
 </Project>

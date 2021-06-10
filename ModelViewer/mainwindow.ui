@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>576</height>
+    <width>1023</width>
+    <height>598</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Skellig</string>
+   <string>ModelViewer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="centralLayout">
@@ -26,6 +26,13 @@
      <widget class="QPushButton" name="pushButton">
       <property name="text">
        <string>OpenFile</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox">
+      <property name="text">
+       <string>New Shader</string>
       </property>
      </widget>
     </item>
@@ -58,6 +65,7 @@
    <container>1</container>
    <slots>
     <slot>setPolygonMode(int)</slot>
+    <slot>setNewShader(int)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -70,12 +78,28 @@
    <slot>setPolygonMode(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>14</x>
-     <y>535</y>
+     <x>23</x>
+     <y>588</y>
     </hint>
     <hint type="destinationlabel">
      <x>79</x>
      <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>widget</receiver>
+   <slot>setNewShader(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>292</x>
+     <y>549</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>508</y>
     </hint>
    </hints>
   </connection>
