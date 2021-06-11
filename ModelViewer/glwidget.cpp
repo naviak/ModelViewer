@@ -12,6 +12,7 @@ GLWidget::GLWidget(QWidget* parent) :
 GLWidget::~GLWidget() {
     makeCurrent();
     delete m_model;
+    delete road;
 	for(auto &a:m_program){ delete a; }
     doneCurrent();
 }
@@ -24,7 +25,7 @@ QOpenGLShaderProgram* GLWidget::newShader()
     assert(shader->link());
     assert(shader->bind());
     shader->setUniformValue("vLight", QVector3D(2, 2, 2));
-    shader->setUniformValue("ambientLight", QVector4D(0.8f, 0.3f, 0.3f, 1.f));
+    shader->setUniformValue("ambientLight", QVector4D(0.3f, 0.3f, 0.3f, 1.f));
     return shader;
 }
 
