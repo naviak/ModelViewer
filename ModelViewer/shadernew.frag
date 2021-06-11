@@ -1,6 +1,6 @@
 #version 330 core
 
-in vec2 TexCoords;
+noperspective in vec2 TexCoords;
 in vec3 fN;
 in vec3 fL;
 in float visibility;
@@ -25,9 +25,9 @@ void main() {
     }
     vec3 c = mix(vec4(0.5f,0.5f,0.5f,1.0f),gl_FragColor,visibility).xyz;
     c = pow(c, vec3(0.6f, 0.6f, 0.6f));
-    c = c * 8.f;
+    c = c * 16.f;
     c = floor(c);
-    c = c / 8.f;
+    c = c / 16.f;
     c = pow(c, vec3(1.0/0.6f));
     gl_FragColor = vec4(c, 1.0);
 
