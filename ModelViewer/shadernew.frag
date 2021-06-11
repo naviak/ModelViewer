@@ -23,6 +23,13 @@ void main() {
     {
         gl_FragColor = 0.35f*vec4(diffuse_intensity,diffuse_intensity,diffuse_intensity,1.0f) + (0.65f*ambientLight);
     }
-    gl_FragColor = mix(vec4(0.5f,0.5f,0.5f,1.0f),gl_FragColor,visibility);
+    vec3 c = mix(vec4(0.5f,0.5f,0.5f,1.0f),gl_FragColor,visibility).xyz;
+    c = pow(c, vec3(0.6f, 0.6f, 0.6f));
+    c = c * 8.f;
+    c = floor(c);
+    c = c / 8.f;
+    c = pow(c, vec3(1.0/0.6f));
+    gl_FragColor = vec4(c, 1.0);
+
 }
 
