@@ -79,6 +79,7 @@ void GLWidget::paintGL() {
 
 void GLWidget::loadModel(QString filename) {
     _filename = filename;
+	if(m_model != nullptr ) delete m_model;
     makeCurrent();
     m_model = new Model(filename, this,m_program[shader_num],!(shader_num/2));
     doneCurrent();
