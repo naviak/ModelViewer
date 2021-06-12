@@ -91,6 +91,7 @@ void GLWidget::loadRoad()
 
 void GLWidget::setNewShader(int newshader)
 {
+	
     shader_num = newshader/2;
     glUseProgram(m_program[shader_num]->programId());
 	if(!_filename.isEmpty()) loadModel(_filename);
