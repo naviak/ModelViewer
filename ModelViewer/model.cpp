@@ -125,7 +125,7 @@ void Model::loadTextures(Mesh* mesh, aiMaterial* material, aiTextureType type) {
 
         QOpenGLTexture* texture = new QOpenGLTexture(tex);
         texture->setWrapMode(QOpenGLTexture::MirroredRepeat);
-        texture->setMinificationFilter(QOpenGLTexture::Nearest);
+        texture->setMinificationFilter(filter);
         mesh->textures.append(texture);
     }
 }
