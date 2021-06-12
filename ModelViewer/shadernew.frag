@@ -24,6 +24,7 @@ vec4 posterization(vec4 color)
     return vec4(c,1.0f);
 }
 
+
 vec4 pixelation(sampler2D sceneTex, vec2 uv) //uv - texture coords
 {
     float dx = 15.f*(1.f/rt_w);
