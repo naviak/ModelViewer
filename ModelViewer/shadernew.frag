@@ -47,9 +47,10 @@ void main() {
     {
         gl_FragColor = 0.35f*vec4(diffuse_intensity,diffuse_intensity,diffuse_intensity,1.0f) + (0.65f*ambientLight);
     }
-    vec4 c = mix(vec4(0.5f,0.5f,0.5f,1.0f),gl_FragColor,visibility);
+    gl_FragColor = posterization(gl_FragColor);
+    gl_FragColor = mix(vec4(0.5f,0.5f,0.5f,1.0f),gl_FragColor,visibility);
 
-    gl_FragColor = posterization(c);
+    
 
 }
 
