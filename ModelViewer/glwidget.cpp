@@ -53,6 +53,8 @@ void GLWidget::initializeGL() {
     loadRoad();
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    int a = width();
+    int b = height();
 }
 
 
@@ -63,6 +65,11 @@ void GLWidget::paintGL() {
     m_program[shader_num]->setUniformValue("model", m_modelMat);
     m_program[shader_num]->setUniformValue("view", _camera.getViewMatrix());
     m_program[shader_num]->setUniformValue("projection", m_projectionMat);
+    if (shader_num)
+    {
+        m_program[shader_num]->setUniformValue("rt_w", static_cast<float>(width()));
+        m_program[shader_num]->setUniformValue("rt_h", static_cast<float>(height()));
+    }
     makeCurrent();
     road->draw(this, m_program[shader_num]);
     doneCurrent();
@@ -81,13 +88,13 @@ void GLWidget::loadModel(QString filename) {
     _filename = filename;
 	if(m_model != nullptr ) delete m_model;
     makeCurrent();
-    m_model = new Model(filename, this,m_program[shader_num],!(shader_num/2));
+    m_model = new Model(filename, this,m_program[shader_num],!shader_num);
     doneCurrent();
 }
 
 void GLWidget::loadRoad()
 {
-    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/gr3.obj", this, m_program[shader_num], !(shader_num / 2));
+    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/gr3.obj", this, m_program[shader_num], !shader_num);
 }
 
 void GLWidget::setNewShader(int newshader)
