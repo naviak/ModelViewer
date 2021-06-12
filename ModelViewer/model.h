@@ -24,7 +24,7 @@ struct Node {
 
 class Model {
 public:
-    Model(QString filename, QOpenGLFunctions_3_3_Core* context,QOpenGLShaderProgram* program);
+    Model(QString filename, QOpenGLFunctions_3_3_Core* context,QOpenGLShaderProgram* program,int bad_textures = 0);
     ~Model();
     void draw(QOpenGLFunctions_3_3_Core* context, QOpenGLShaderProgram* program);
 
@@ -37,6 +37,7 @@ private:
     Node* m_rootNode;
     QFileInfo m_fileInfo;
     QVector<Mesh*> m_meshes;
+    QOpenGLTexture::Filter filter;
 };
 
 #endif // MODEL_H

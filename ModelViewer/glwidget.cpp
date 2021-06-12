@@ -78,20 +78,22 @@ void GLWidget::paintGL() {
 }
 
 void GLWidget::loadModel(QString filename) {
+    _filename = filename;
     makeCurrent();
-    m_model = new Model(filename, this,m_program[shader_num]);
+    m_model = new Model(filename, this,m_program[shader_num],!(shader_num/2));
     doneCurrent();
 }
 
 void GLWidget::loadRoad()
 {
-    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/gr3.obj", this, m_program[shader_num]);
+    road = new Model("C:/Users/Max Dudar/source/repos/ModelViewer/ModelViewer/Meshes/gr3.obj", this, m_program[shader_num], !(shader_num / 2));
 }
 
 void GLWidget::setNewShader(int newshader)
 {
     shader_num = newshader/2;
     glUseProgram(m_program[shader_num]->programId());
+	if(!_filename.isEmpty()) loadModel(_filename);
 }
 
 

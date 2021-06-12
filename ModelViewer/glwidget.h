@@ -111,6 +111,7 @@ private:
 	int shader_num = 0;
     QVector<QOpenGLShaderProgram*> m_program;
 	QOpenGLShaderProgram* nm_program;
+	QString _filename;
 };
 
 #endif // GLWIDGET_H

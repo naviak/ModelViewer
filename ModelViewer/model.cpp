@@ -6,7 +6,7 @@ Node::~Node() {
     }
 }
 
-Model::Model(QString filename, QOpenGLFunctions_3_3_Core* context, QOpenGLShaderProgram* program) :
+Model::Model(QString filename, QOpenGLFunctions_3_3_Core* context, QOpenGLShaderProgram* program, int bad_textures) :
     m_rootNode(nullptr),
     m_fileInfo(filename)
 {
@@ -15,7 +15,8 @@ Model::Model(QString filename, QOpenGLFunctions_3_3_Core* context, QOpenGLShader
                                              aiProcess_Triangulate  |
                                              aiProcess_FlipUVs      |
                                              aiProcess_GenNormals   );
-
+    if (bad_textures) filter = QOpenGLTexture::Nearest;
+    else filter = QOpenGLTexture::Linear;
     if (!scene) {
         qDebug() << "Model import error: " << importer.GetErrorString();
         return;
