@@ -27,12 +27,12 @@ QOpenGLShaderProgram* GLWidget::newShader()
     shader->setUniformValue("vLight", QVector3D(2, 2, 2));
     shader->setUniformValue("ambientLight", QVector4D(0.3f, 0.3f, 0.3f, 1.f));
 
-    shader->setUniformValue("LightPos1", QVector4D(2.f, 2.f, 2.f, 1.f));
+    shader->setUniformValue("LightPos1", QVector4D(2.f, 1.f, 2.f, 1.f));
     shader->setUniformValue("LightPos2", QVector4D(2.f, 2.f, -2.f, 1.f));
     shader->setUniformValue("LightPos3", QVector4D(-2.f, 2.f, 2.f, 1.f));
     shader->setUniformValue("LightPos4", QVector4D(0.3f, 5.f, 0.3f, 1.f));
 
-    shader->setUniformValue("LightColor1", QVector4D(0.2f, 0.2f, 0.2f, 1.f));
+    shader->setUniformValue("LightColor1", QVector4D(1.f, 1.f, 1.f, 1.f));
     shader->setUniformValue("LightColor2", QVector4D(0.3f, 0.1f, 0.3f, 1.f));
     shader->setUniformValue("LightColor3", QVector4D(0.3f, 0.3f, 0.1f, 1.f));
     shader->setUniformValue("LightColor4", QVector4D(0.1f, 0.3f, 0.3f, 1.f));

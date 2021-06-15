@@ -43,7 +43,7 @@ void main() {
     if(TextureSet)
     {
         gl_FragColor = 0.3f*ambientLight+(0.7f*diffuse_intensity*pixelation(Texture0, TexCoords));
-        //gl_FragColor = vec4(dfl,1.f)*pixelation(Texture0, TexCoords);
+        //gl_FragColor = 0.7f*vec4(dfl,1.f)*pixelation(Texture0, TexCoords);
     }
     else
     {

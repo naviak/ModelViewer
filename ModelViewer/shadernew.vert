@@ -63,9 +63,9 @@ vec3 ShadeVertexLightsFull (vec3 vertex, vec3 normal, int lightCount, int spotLi
     mat3 itMV3 = M4toM3(itMV());
     vec3 viewN = normalize(itMV3 * normal);
     float spotAngle = PI;
-    vec4 LightAtten = vec4(cos(spotAngle/2.f),1/cos(spotAngle/4.f),0.0f,1000.f);
+    vec4 LightAtten = vec4(cos(spotAngle/2.f),1/cos(spotAngle/4.f),0.001f,1000.f);
 
-    vec3 lightColor = ambLight.xyz;
+    vec3 lightColor = 0.3f*ambLight.xyz;
     for (int i = 0; i < lightCount; i++) {
         vec3 toLight = lightpos[i].xyz - viewpos.xyz * lightpos[i].w;
         float lengthSq = dot(toLight, toLight);
@@ -73,7 +73,7 @@ vec3 ShadeVertexLightsFull (vec3 vertex, vec3 normal, int lightCount, int spotLi
         // don't produce NaNs if some vertex position overlaps with the light
         lengthSq = max(lengthSq, 0.0001f);
 
-        toLight *= 1/sqrt(lengthSq);
+        toLight = normalize(toLight);
 
         float atten = 1.0 / (1.0 + lengthSq * LightAtten.z);
         if (spotLight)
