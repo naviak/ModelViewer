@@ -3,6 +3,7 @@
 noperspective in vec2 TexCoords;
 in vec3 fN;
 in vec3 fL;
+in vec3 dfl;
 in float visibility;
 
 uniform sampler2D Texture0;
@@ -42,6 +43,7 @@ void main() {
     if(TextureSet)
     {
         gl_FragColor = 0.3f*ambientLight+(0.7f*diffuse_intensity*pixelation(Texture0, TexCoords));
+        //gl_FragColor = vec4(dfl,1.f)*pixelation(Texture0, TexCoords);
     }
     else
     {
