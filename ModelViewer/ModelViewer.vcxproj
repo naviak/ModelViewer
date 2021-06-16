@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="FpsMonitor.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="model.h" />

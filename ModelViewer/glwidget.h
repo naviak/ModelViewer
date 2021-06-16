@@ -9,9 +9,10 @@
 #include <QOpenGLFunctions_3_3_Core>
 #include <QWheelEvent>
 #include <QMouseEvent>
-
+#include <QLabel>
 #include "model.h"
 #include "camera.h"
+#include "FpsMonitor.h"
 #include "Input.h"
 #include "MouseInput.h"
 
@@ -112,6 +113,9 @@ private:
     QVector<QOpenGLShaderProgram*> m_program;
 	QOpenGLShaderProgram* nm_program;
 	QString _filename;
+	FpsMonitor fps;
+	QLabel* labfps;
+	QPalette sample_palette;
 };
 
 #endif // GLWIDGET_H

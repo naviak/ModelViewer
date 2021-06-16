@@ -5,6 +5,8 @@ GLWidget::GLWidget(QWidget* parent) :
     m_model(nullptr),
     m_timer(0)
 {
+    labfps = new QLabel(this);
+    labfps->move(width() - 50, 0);
     setMouseTracking(true);
     setFocusPolicy(Qt::StrongFocus);
 }
@@ -67,14 +69,16 @@ void GLWidget::initializeGL() {
     loadRoad();
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    int a = width();
-    int b = height();
+    sample_palette.setColor(QPalette::Window, Qt::darkGreen);
 }
 
 
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    labfps->setAutoFillBackground(true);
+    labfps->setText(std::to_string(1 / fps.getFPS()).c_str());
+    labfps->setPalette(sample_palette);
+    labfps->show();
     m_program[shader_num]->bind();
     m_program[shader_num]->setUniformValue("model", m_modelMat);
     m_program[shader_num]->setUniformValue("view", _camera.getViewMatrix());
